@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FeatherDotNet
+namespace FeatherDotNet.Impl
 {
     enum DateTimePrecisionType
     {
@@ -95,6 +95,89 @@ namespace FeatherDotNet
 
     static class ColumnTypeExtensionMethods
     {
+        public static feather.fbs.Type MapToFeatherEnum(this ColumnType onDiskType)
+        {
+            switch (onDiskType)
+            {
+                case ColumnType.Binary:
+                case ColumnType.NullableBinary: return feather.fbs.Type.BINARY;
+
+                case ColumnType.Bool:
+                case ColumnType.NullableBool: return feather.fbs.Type.BOOL;
+
+                case ColumnType.Category:
+                case ColumnType.NullableCategory:
+                    //return feather.fbs.Type.CATEGORY;
+                    // note: even though there is a CATEGORY type, R produces Int32 backed
+                    //   columns.  Possibly a bug?
+                    return feather.fbs.Type.INT32;
+
+                case ColumnType.Date:
+                case ColumnType.NullableDate: return feather.fbs.Type.DATE;
+
+                case ColumnType.Double:
+                case ColumnType.NullableDouble: return feather.fbs.Type.DOUBLE;
+
+                case ColumnType.Float:
+                case ColumnType.NullableFloat: return feather.fbs.Type.FLOAT;
+
+                case ColumnType.Int16:
+                case ColumnType.NullableInt16: return feather.fbs.Type.INT16;
+
+                case ColumnType.Int32:
+                case ColumnType.NullableInt32: return feather.fbs.Type.INT32;
+
+                case ColumnType.Int64:
+                case ColumnType.NullableInt64: return feather.fbs.Type.INT64;
+
+                case ColumnType.Int8:
+                case ColumnType.NullableInt8: return feather.fbs.Type.INT8;
+                    
+                case ColumnType.Timestamp_Millisecond:
+                case ColumnType.Timestamp_Microsecond:
+                case ColumnType.Timestamp_Second:
+                case ColumnType.Timestamp_Nanosecond:
+                case ColumnType.NullableTimestamp_Millisecond:
+                case ColumnType.NullableTimestamp_Microsecond:
+                case ColumnType.NullableTimestamp_Second:
+                case ColumnType.NullableTimestamp_Nanosecond:
+                    //return feather.fbs.Type.TIMESTAMP;
+                    // note: even though there is a TIMESTAMP type, the actual primitive's the R library produces
+                    //  is an int64
+                    return feather.fbs.Type.INT64;
+
+                case ColumnType.Time_Microsecond:
+                case ColumnType.Time_Millisecond:
+                case ColumnType.Time_Nanosecond:
+                case ColumnType.Time_Second:
+                case ColumnType.NullableTime_Microsecond:
+                case ColumnType.NullableTime_Millisecond:
+                case ColumnType.NullableTime_Nanosecond:
+                case ColumnType.NullableTime_Second:
+                    //return feather.fbs.Type.TIME;
+                    // note: even though there is a TIME type, the actual primitive's the R library produces
+                    //  is an int64
+                    return feather.fbs.Type.INT64;
+
+                case ColumnType.Uint16:
+                case ColumnType.NullableUint16: return feather.fbs.Type.UINT16;
+
+                case ColumnType.Uint32:
+                case ColumnType.NullableUint32: return feather.fbs.Type.UINT32;
+
+                case ColumnType.Uint64:
+                case ColumnType.NullableUint64: return feather.fbs.Type.UINT64;
+
+                case ColumnType.Uint8:
+                case ColumnType.NullableUint8: return feather.fbs.Type.UINT8;
+
+                case ColumnType.String:
+                case ColumnType.NullableString: return feather.fbs.Type.UTF8;
+
+                default: throw new Exception($"Unexpected ColumnType {onDiskType}");
+            }
+        }
+
         public static byte GetAlignment(this ColumnType onDiskType)
         {
             switch (onDiskType)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using FeatherDotNet.Impl;
 
 namespace FeatherDotNet
 {

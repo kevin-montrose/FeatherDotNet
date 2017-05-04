@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using FeatherDotNet.Impl;
 
 namespace FeatherDotNet
 {
@@ -97,13 +98,75 @@ namespace FeatherDotNet
             }
 
             var ret = TryRead(memoryMapped, size, basis, out frame, out errorMessage);
-
             if (!ret)
             {
                 memoryMapped.Dispose();
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Create a dataframe from the bytes passed, with the given basis.
+        /// 
+        /// Throws if the dataframe cannot be created.
+        /// </summary>
+        public static DataFrame ReadFromBytes(byte[] bytes, BasisType basis)
+        {
+            string errorMessage;
+            DataFrame ret;
+            if (!TryReadFromBytes(bytes, basis, out ret, out errorMessage))
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Create a dataframe from the give bytes, with the given basis.
+        /// 
+        /// Returns false if the dataframe cannot be created.
+        /// </summary>
+        public static bool TryReadFromBytes(byte[] bytes, BasisType basis, out DataFrame frame, out string errorMessage)
+        {
+            MemoryMappedFile memoryMapped;
+            try
+            {
+                memoryMapped = MakeMemoryMappedProxy(bytes);
+            }
+            catch (Exception e)
+            {
+                errorMessage = $"Encoutered {e.GetType().Name} trying to create a memory mapped proxy for passed bytes: {e.Message}";
+                frame = null;
+                return false;
+            }
+
+            var ret = TryRead(memoryMapped, bytes.Length, basis, out frame, out errorMessage);
+            if (!ret)
+            {
+                memoryMapped.Dispose();
+            }
+
+            return ret;
+        }
+
+        static MemoryMappedFile MakeMemoryMappedProxy(byte[] bytes)
+        {
+            var newFile = MemoryMappedFile.CreateNew(nameof(FeatherDotNet) + "." + nameof(MakeMemoryMappedProxy) + "." + Guid.NewGuid(), bytes.Length);
+            try
+            {
+                using (var stream = newFile.CreateViewStream())
+                {
+                    stream.Write(bytes, 0, bytes.Length);
+                }
+            }
+            catch
+            {
+                newFile?.Dispose();
+                throw;
+            }
+            return newFile;
         }
 
         static bool TryRead(MemoryMappedFile file, long fileSize, BasisType basis, out DataFrame frame, out string errorMessage)
@@ -131,14 +194,10 @@ namespace FeatherDotNet
             errorMessage = null;
             return true;
         }
-
-        const int FEATHER_VERSION = 2;
-        const int NULL_BITMASK_ALIGNMENT = 8;
-        const int MAGIC_HEADER_SIZE = 4;
-        const int MAGIC_HEADER = ((byte)'F' << (8 * 0)) | ((byte)'E') << (8 * 1) | ((byte)'A' << (8 * 2)) | ((byte)'1' << (8 * 3)); // 'FEA1', little endian
+        
         static bool TryReadMetaData(MemoryMappedFile file, long size, out Metadata metadata, out string error)
         {
-            if (size < MAGIC_HEADER_SIZE * 2)
+            if (size < FeatherMagic.MAGIC_HEADER_SIZE * 2)
             {
                 metadata = default(Metadata);
                 error = $"File too small ({size:N0} bytes) to be a valid feather file";
@@ -149,26 +208,26 @@ namespace FeatherDotNet
             {
                 var leadingHeader = accessor.ReadInt32(0);
 
-                if (leadingHeader != MAGIC_HEADER)
+                if (leadingHeader != FeatherMagic.MAGIC_HEADER)
                 {
                     metadata = default(Metadata);
                     error = $"Magic header malformed";
                     return false;
                 }
 
-                var trailingHeader = accessor.ReadInt32(size - MAGIC_HEADER_SIZE);
+                var trailingHeader = accessor.ReadInt32(size - FeatherMagic.MAGIC_HEADER_SIZE);
 
-                if (trailingHeader != MAGIC_HEADER)
+                if (trailingHeader != FeatherMagic.MAGIC_HEADER)
                 {
                     metadata = default(Metadata);
                     error = $"Magic footer malformed";
                     return false;
                 }
 
-                var metadataSize = accessor.ReadUInt32(size - MAGIC_HEADER_SIZE - sizeof(uint));
+                var metadataSize = accessor.ReadUInt32(size - FeatherMagic.MAGIC_HEADER_SIZE - sizeof(uint));
 
-                var metadataStart = size - MAGIC_HEADER_SIZE - sizeof(uint) - metadataSize;
-                if (metadataStart < MAGIC_HEADER_SIZE || metadataSize > int.MaxValue)
+                var metadataStart = size - FeatherMagic.MAGIC_HEADER_SIZE - sizeof(uint) - metadataSize;
+                if (metadataStart < FeatherMagic.MAGIC_HEADER_SIZE || metadataSize > int.MaxValue)
                 {
                     metadata = default(Metadata);
                     error = $"Metadata size ({metadataSize:N0}) is invalid";
@@ -177,16 +236,16 @@ namespace FeatherDotNet
 
                 var metadataBytes = new byte[metadataSize];
                 accessor.ReadArray(metadataStart, metadataBytes, 0, (int)metadataSize);
-
+                
                 // note: It'd be nice to not actually use flatbuffers for this,
                 //   kind of a heavy (re)build dependency for reading, like, 4 
                 //   things
                 var metadataBuffer = new ByteBuffer(metadataBytes);
                 var metadataCTable = CTable.GetRootAsCTable(metadataBuffer);
 
-                if (metadataCTable.Version != FEATHER_VERSION)
+                if (metadataCTable.Version != FeatherMagic.FEATHER_VERSION)
                 {
-                    error = $"Unexpected version {metadataCTable.Version}, only {FEATHER_VERSION} is supported";
+                    error = $"Unexpected version {metadataCTable.Version}, only {FeatherMagic.FEATHER_VERSION} is supported";
                     metadata = default(Metadata);
                     return false;
                 }
@@ -204,7 +263,6 @@ namespace FeatherDotNet
                     var metadataColumn = metadataCTable.Columns(i).Value;
                     var name = metadataColumn.Name;
                     var metadataType = metadataColumn.MetadataType;
-                    var userMetadata = metadataColumn.UserMetadata;
 
                     string[] categoryLevels = null;
                     DateTimePrecisionType precision = default(DateTimePrecisionType);
@@ -711,15 +769,15 @@ namespace FeatherDotNet
                     numNullBytes++;
                 }
             }
-
+            
             // a naive reading of the spec suggests that the null bitmask should be
             //   aligned based on the _type_ but it appears to always be long
             //   aligned.
             // this may be a bug in the spec
             int nullPadding = 0;
-            if ((numNullBytes % NULL_BITMASK_ALIGNMENT) != 0)
+            if ((numNullBytes % FeatherMagic.NULL_BITMASK_ALIGNMENT) != 0)
             {
-                nullPadding = NULL_BITMASK_ALIGNMENT - (int)(numNullBytes % NULL_BITMASK_ALIGNMENT);
+                nullPadding = FeatherMagic.NULL_BITMASK_ALIGNMENT - (int)(numNullBytes % FeatherMagic.NULL_BITMASK_ALIGNMENT);
             }
             var nullOffset = isNullable ? (arrayOffset) : -1;
             var dataOffset = !isNullable ? (arrayOffset) : (nullOffset + numNullBytes + nullPadding);

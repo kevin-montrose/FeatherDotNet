@@ -1,4 +1,6 @@
-﻿namespace FeatherDotNet
+﻿using FeatherDotNet.Impl;
+
+namespace FeatherDotNet
 {
     /// <summary>
     /// Utility class for addressing a <see cref="TypedDataFrameBase{TRowType}"/> rows.
