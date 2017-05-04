@@ -41,7 +41,7 @@ be allocated until rows are accessed.
 
 A factory method may be optionally provided, allowing objects to be reused when the dataframe is being accessed.
 
-## Examples
+## Read Examples
 
 See the [test project](https://github.com/kevin-montrose/FeatherDotNet/FeatherDotNet.Tests)
 
@@ -66,10 +66,29 @@ All non-nullable underlying types can be freely converted to their nullable equi
 Nullable underlying types cannot be mapped to their non-null equivalent, even if the specific `Value` is non-null.  In other words, type mappings are validated
 at the column level rather than the cell level.
 
+## Write Dataframes
+
+Use the `FeatherWriter` class and the `AddColumn` and `AddColumns` methods.  FeatherDotNet can write to either streams or directly to a file.
+
+Ideal performance is seen when columns implement the `ICollection<T>` interface, but `FeatherWriter` will cope with untyped enumerables by dynamically
+chosing the widest data type.
+
+Two different write modes are supported: `Eager` and `Lazy`.
+
+`Eager` will immediately write to disk, and won't keep references to any columns added.  This mode is best if the columns need to be available for GC
+before writing has completed.
+
+`Lazy` will queue up writes to disk, and execute all of them when the `FeatherWriter` is disposed.  This mode allows `AddColumn` calls to return immediately.
+
+In both modes column data types are validated eagerly, so the benefits of `Lazy` mode can only be fully realized if the added columns implement `ICollection<T>`.
+
+## Write Examples
+
+See the [test project](https://github.com/kevin-montrose/FeatherDotNet/FeatherDotNet.Tests), in particular the [`WriteTests` class](https://github.com/kevin-montrose/FeatherDotNet/blob/master/FeatherDotNet.Tests/WriteTests.cs).
+
 ## Not Implemented
 
 Feather.NET is a Work In Progress, the following features are not yet implemented:
 
- - Writing feather files
  - Binary (ie. `byte[]`) columns
  - Dictionary encodings
