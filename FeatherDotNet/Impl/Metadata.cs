@@ -1,4 +1,4 @@
-﻿namespace FeatherDotNet
+﻿namespace FeatherDotNet.Impl
 {
     struct Metadata
     {

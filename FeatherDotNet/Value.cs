@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using FeatherDotNet.Impl;
 
 namespace FeatherDotNet
 {
@@ -495,7 +496,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int32:
                 case ColumnType.NullableInt32:
@@ -503,7 +504,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (uint)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int64:
                 case ColumnType.NullableInt64:
@@ -511,7 +512,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint64:
                 case ColumnType.NullableUint64:
-                    value = (ulong)Parent.ReadInt64(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ulong)Parent.ReadUInt64(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int8:
                 case ColumnType.NullableInt8:
@@ -587,7 +588,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int32:
                 case ColumnType.NullableInt32:
@@ -595,7 +596,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (uint)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int64:
                 case ColumnType.NullableInt64:
@@ -603,7 +604,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint64:
                 case ColumnType.NullableUint64:
-                    value = (ulong)Parent.ReadInt64(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ulong)Parent.ReadUInt64(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int8:
                 case ColumnType.NullableInt8:
@@ -696,7 +697,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int32:
                 case ColumnType.NullableInt32:
@@ -704,7 +705,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (uint)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int64:
                 case ColumnType.NullableInt64:
@@ -712,7 +713,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint64:
                 case ColumnType.NullableUint64:
-                    value = (ulong)Parent.ReadInt64(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ulong)Parent.ReadUInt64(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int8:
                 case ColumnType.NullableInt8:
@@ -782,7 +783,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int32:
                 case ColumnType.NullableInt32:
@@ -790,7 +791,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (uint)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int64:
                 case ColumnType.NullableInt64:
@@ -798,7 +799,7 @@ namespace FeatherDotNet
                     return true;
                 case ColumnType.Uint64:
                 case ColumnType.NullableUint64:
-                    value = (ulong)Parent.ReadInt64(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ulong)Parent.ReadUInt64(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Int8:
                 case ColumnType.NullableInt8:
@@ -867,7 +868,7 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -905,7 +906,7 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -964,9 +965,9 @@ namespace FeatherDotNet
 
             switch (type)
             {
-                case ColumnType.Uint8:
-                case ColumnType.NullableUint8:
-                    value = (sbyte)Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                case ColumnType.Int8:
+                case ColumnType.NullableInt8:
+                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1002,9 +1003,9 @@ namespace FeatherDotNet
 
             switch (type)
             {
-                case ColumnType.Uint8:
-                case ColumnType.NullableUint8:
-                    value = (sbyte)Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                case ColumnType.Int8:
+                case ColumnType.NullableInt8:
+                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1178,11 +1179,11 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1222,11 +1223,11 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1414,15 +1415,15 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (ushort)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1464,15 +1465,15 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (uint)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1674,19 +1675,19 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (uint)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint64:
                 case ColumnType.NullableUint64:
-                    value = (ulong)Parent.ReadInt64(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ulong)Parent.ReadUInt64(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1730,19 +1731,19 @@ namespace FeatherDotNet
             {
                 case ColumnType.Uint16:
                 case ColumnType.NullableUint16:
-                    value = (ushort)Parent.ReadInt16(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ushort)Parent.ReadUInt16(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint32:
                 case ColumnType.NullableUint32:
-                    value = (uint)Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (uint)Parent.ReadUInt32(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint64:
                 case ColumnType.NullableUint64:
-                    value = (ulong)Parent.ReadInt64(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = (ulong)Parent.ReadUInt64(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
                 case ColumnType.Uint8:
                 case ColumnType.NullableUint8:
-                    value = Parent.ReadInt8(TranslatedRowIndex, TranslatedColumnIndex);
+                    value = Parent.ReadUInt8(TranslatedRowIndex, TranslatedColumnIndex);
                     return true;
 
                 default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -1960,7 +1961,7 @@ namespace FeatherDotNet
             }
         }
 
-        static readonly DateTime DateTime_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        
         const long NANOSECONDS_PER_TICK = 100;
         const double TICKS_PER_NANOSECOND = 1.0 / NANOSECONDS_PER_TICK;
         const long TICKS_PER_MICROSECOND = (long)(TICKS_PER_NANOSECOND * 1000);
@@ -2034,7 +2035,7 @@ namespace FeatherDotNet
             {
                 var val = Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
 
-                value = DateTime_EPOCH + TimeSpan.FromDays(val);
+                value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromDays(val);
                 return true;
             }
             else
@@ -2045,22 +2046,22 @@ namespace FeatherDotNet
                 {
                     case ColumnType.Timestamp_Microsecond:
                     case ColumnType.NullableTimestamp_Microsecond:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MICROSECOND);
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MICROSECOND);
                         return true;
 
                     case ColumnType.Timestamp_Millisecond:
                     case ColumnType.NullableTimestamp_Millisecond:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MILLISECOND);
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MILLISECOND);
                         return true;
 
                     case ColumnType.Timestamp_Nanosecond:
                     case ColumnType.NullableTimestamp_Nanosecond:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks((long)Math.Round((val * TICKS_PER_NANOSECOND)));
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks((long)Math.Round((val * TICKS_PER_NANOSECOND)));
                         return true;
 
                     case ColumnType.Timestamp_Second:
                     case ColumnType.NullableTimestamp_Second:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_SECOND);
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_SECOND);
                         return true;
 
                     default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -2109,7 +2110,7 @@ namespace FeatherDotNet
             {
                 var val = Parent.ReadInt32(TranslatedRowIndex, TranslatedColumnIndex);
 
-                value = DateTime_EPOCH + TimeSpan.FromDays(val);
+                value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromDays(val);
                 return true;
             }
             else
@@ -2120,22 +2121,22 @@ namespace FeatherDotNet
                 {
                     case ColumnType.Timestamp_Microsecond:
                     case ColumnType.NullableTimestamp_Microsecond:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MICROSECOND);
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MICROSECOND);
                         return true;
 
                     case ColumnType.Timestamp_Millisecond:
                     case ColumnType.NullableTimestamp_Millisecond:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MILLISECOND);
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_MILLISECOND);
                         return true;
 
                     case ColumnType.Timestamp_Nanosecond:
                     case ColumnType.NullableTimestamp_Nanosecond:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks((long)Math.Round((val * TICKS_PER_NANOSECOND)));
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks((long)Math.Round((val * TICKS_PER_NANOSECOND)));
                         return true;
 
                     case ColumnType.Timestamp_Second:
                     case ColumnType.NullableTimestamp_Second:
-                        value = DateTime_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_SECOND);
+                        value = FeatherMagic.DATETIME_EPOCH + TimeSpan.FromTicks(val * TICKS_PER_SECOND);
                         return true;
 
                     default: throw new InvalidOperationException($"Unexpected column type {type}");
@@ -2494,153 +2495,5 @@ namespace FeatherDotNet
         }
 
         static bool NullableCategoryEquals(Value a, Value b) => CategoryEquals(a, b);
-    }
-
-    static class ValueCaster<T>
-    {
-        static readonly Func<Value, CategoryEnumMapType, T> Delegate;
-
-        static ValueCaster()
-        {
-            var dyn = new System.Reflection.Emit.DynamicMethod("Cast_Value_To_" + typeof(T).Name, typeof(T), new[] { typeof(Value), typeof(CategoryEnumMapType) }, restrictedSkipVisibility: true);
-            var il = dyn.GetILGenerator();
-
-            bool needsCategoryList;
-
-            if (typeof(T) == typeof(Value))
-            {
-                
-                il.Emit(System.Reflection.Emit.OpCodes.Ldarg_0);                 // Value
-                il.Emit(System.Reflection.Emit.OpCodes.Ret);                     // --empty--
-            }
-            else
-            {
-                var tIsEnum = typeof(T).IsEnum;
-                var tIsNullableEnum = Nullable.GetUnderlyingType(typeof(T))?.IsEnum ?? false;
-
-                System.Reflection.MethodInfo conversionStaticMethod;
-
-                if (tIsEnum)
-                {
-                    var convertEnumGen = typeof(Value).GetMethod("ConvertEnum", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-                    var convertEnum = convertEnumGen.MakeGenericMethod(typeof(T));
-
-                    needsCategoryList = true;
-                    conversionStaticMethod = convertEnum;
-                }
-                else
-                {
-                    if (tIsNullableEnum)
-                    {
-                        var enumType = Nullable.GetUnderlyingType(typeof(T));
-                        var convertNullableEnumGen = typeof(Value).GetMethod("ConvertNullableEnum", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-                        var convertNullableEnum = convertNullableEnumGen.MakeGenericMethod(enumType);
-
-                        needsCategoryList = true;
-                        conversionStaticMethod = convertNullableEnum;
-                    }
-                    else
-                    {
-                        needsCategoryList = false;
-                        conversionStaticMethod =
-                            typeof(Value)
-                                .GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
-                                .Where(mtd => mtd.Name == "op_Implicit" && mtd.ReturnType == typeof(T))
-                                .Single();
-                    }
-                }
-                
-                il.Emit(System.Reflection.Emit.OpCodes.Ldarg_0);                        // Value
-
-                if (needsCategoryList)
-                {
-                    il.Emit(System.Reflection.Emit.OpCodes.Ldarg_1);                    // Value CategoryEnumMapType
-                }
-
-                il.Emit(System.Reflection.Emit.OpCodes.Call, conversionStaticMethod);   // T
-                il.Emit(System.Reflection.Emit.OpCodes.Ret);                            // --empty--
-            }
-
-            Delegate = (Func<Value, CategoryEnumMapType, T>)dyn.CreateDelegate(typeof(Func<Value, CategoryEnumMapType, T>));
-        }
-
-        internal static T Cast(Value value, CategoryEnumMapType enumMapConfig) => Delegate(value, enumMapConfig);
-    }
-
-    static class EnumMapper<T>
-    {
-        static readonly Func<int, T> Delegate;
-        static EnumMapper()
-        {
-            var dyn = new System.Reflection.Emit.DynamicMethod("Map_Enum_" + typeof(T).Name, typeof(T), new[] { typeof(int) }, restrictedSkipVisibility: true);
-            var il = dyn.GetILGenerator();
-
-            var underlying = Enum.GetUnderlyingType(typeof(T));
-
-            il.Emit(System.Reflection.Emit.OpCodes.Ldarg_0);            // ---int---
-            if(underlying == typeof(byte))
-            {
-                il.Emit(System.Reflection.Emit.OpCodes.Conv_U1);
-            }
-            else
-            {
-                if(underlying == typeof(sbyte))
-                {
-                    il.Emit(System.Reflection.Emit.OpCodes.Conv_I1);
-                }
-                else
-                {
-                    if(underlying == typeof(short))
-                    {
-                        il.Emit(System.Reflection.Emit.OpCodes.Conv_I2);
-                    }
-                    else
-                    {
-                        if(underlying == typeof(ushort))
-                        {
-                            il.Emit(System.Reflection.Emit.OpCodes.Conv_U2);
-                        }
-                        else
-                        {
-                            if(underlying == typeof(int))
-                            {
-                                // Nothing to be done
-                            }
-                            else
-                            {
-                                if(underlying == typeof(uint))
-                                {
-                                    il.Emit(System.Reflection.Emit.OpCodes.Conv_U4);
-                                }
-                                else
-                                {
-                                    if(underlying == typeof(long))
-                                    {
-                                        il.Emit(System.Reflection.Emit.OpCodes.Conv_I8);
-                                    }
-                                    else
-                                    {
-                                        if(underlying == typeof(ulong))
-                                        {
-                                            il.Emit(System.Reflection.Emit.OpCodes.Conv_U8);
-                                        }
-                                        else
-                                        {
-                                            throw new InvalidOperationException($"\"Impossible\" (don't get cute) enum found, underlying type isn't an integral type {typeof(T).Name}");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            il.Emit(System.Reflection.Emit.OpCodes.Ret);
-
-            Delegate = (Func<int, T>)dyn.CreateDelegate(typeof(Func<int, T>));
-        }
-
-        public static T Map(int underlying) => Delegate(underlying);
     }
 }

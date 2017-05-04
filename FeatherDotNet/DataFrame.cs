@@ -3,154 +3,10 @@ using System.Collections.Generic;
 using System.IO.MemoryMappedFiles;
 using System.Text;
 using System.Threading;
+using FeatherDotNet.Impl;
 
 namespace FeatherDotNet
 {
-    /// <summary>
-    /// Represents whether a dataframe is using 0-based or 1-based indexing.
-    /// </summary>
-    public enum BasisType
-    {
-        /// <summary>
-        /// 1-based indexing - intended for ports from 1-based languages
-        /// </summary>
-        One = 1,
-        /// <summary>
-        /// 0-based indexing - the C# standard
-        /// </summary>
-        Zero = 2
-    }
-
-    /// <summary>
-    /// Utility class for addressing a dataframes columns.
-    /// </summary>
-    public struct ColumnMap
-    {
-        DataFrame Parent;
-
-        /// <summary>
-        /// Number of columns in the dataframe
-        /// </summary>
-        public long Count => Parent.ColumnCount;
-
-        /// <summary>
-        /// Returns the column at the given index (in the dataframe's basis).
-        /// 
-        /// Throws if the index is out of range.
-        /// </summary>
-        public Column this[long index]
-        {
-            get
-            {
-                var translatedIndex = Parent.TranslateIndex(index);
-
-                if (translatedIndex < 0 || translatedIndex >= Parent.Metadata.Columns.Length)
-                {
-                    long minLegal;
-                    long maxLegal;
-                    switch (Parent.Basis)
-                    {
-                        case BasisType.One:
-                            minLegal = 1;
-                            maxLegal = Parent.Metadata.Columns.Length;
-                            break;
-                        case BasisType.Zero:
-                            minLegal = 0;
-                            maxLegal = Parent.Metadata.Columns.Length - 1;
-                            break;
-                        default: throw new InvalidOperationException($"Unexpected Basis: {Parent.Basis}");
-                    }
-
-                    throw new ArgumentOutOfRangeException(nameof(index), $"Column index out of range, valid between [{minLegal}, {maxLegal}] found {index}");
-                }
-
-                return
-                    new Column
-                    {
-                        Parent = Parent,
-                        TranslatedColumnIndex = translatedIndex
-                    };
-            }
-        }
-
-        /// <summary>
-        /// Returns the column with the given name.
-        /// 
-        /// Throws if no column has the given name.
-        /// </summary>
-        public Column this[string columnName]
-        {
-            get
-            {
-                long translatedIndex;
-                if (!Parent.TryLookupTranslatedColumnIndex(columnName, out translatedIndex))
-                {
-                    throw new KeyNotFoundException($"Could not find column with name \"{columnName}\"");
-                }
-
-                return new Column(Parent, translatedIndex);
-            }
-        }
-
-        internal ColumnMap(DataFrame parent)
-        {
-            Parent = parent;
-        }
-    }
-
-    /// <summary>
-    /// Utility class for addressing a dataframe's rows.
-    /// </summary>
-    public struct RowMap
-    {
-        DataFrame Parent;
-
-        /// <summary>
-        /// Number of rows in the dataframe
-        /// </summary>
-        public long Count => Parent.RowCount;
-
-        /// <summary>
-        /// Returns the row at the given index (in the dataframe's basis).
-        /// 
-        /// Throws if the index is out of range.
-        /// </summary>
-        public Row this[long index]
-        {
-            get
-            {
-                var translatedIndex = Parent.TranslateIndex(index);
-
-                if (translatedIndex < 0 || translatedIndex >= Parent.Metadata.NumRows)
-                {
-                    long minLegal;
-                    long maxLegal;
-                    switch (Parent.Basis)
-                    {
-                        case BasisType.One:
-                            minLegal = 1;
-                            maxLegal = Parent.Metadata.NumRows;
-                            break;
-                        case BasisType.Zero:
-                            minLegal = 0;
-                            maxLegal = Parent.Metadata.NumRows - 1;
-                            break;
-                        default: throw new InvalidOperationException($"Unexpected Basis: {Parent.Basis}");
-                    }
-
-                    throw new ArgumentOutOfRangeException(nameof(index), $"Row index out of range, valid between [{minLegal}, {maxLegal}] found {index}");
-                }
-
-                return new Row(Parent, translatedIndex);
-            }
-        }
-
-        internal RowMap(DataFrame parent)
-        {
-            Parent = parent;
-        }
-    }
-
     /// <summary>
     /// Represents a dataframe.
     /// 
@@ -605,7 +461,17 @@ namespace FeatherDotNet
             return View.ReadSingle(valueOffset);
         }
 
-        internal byte ReadInt8(long translatedRowIndex, long translatedColumnIndex)
+        internal sbyte ReadInt8(long translatedRowIndex, long translatedColumnIndex)
+        {
+            var columnMetadata = Metadata.Columns[translatedColumnIndex];
+            var dataOffset = columnMetadata.DataOffset;
+
+            var valueOffset = dataOffset + translatedRowIndex * sizeof(sbyte);
+
+            return View.ReadSByte(valueOffset);
+        }
+
+        internal byte ReadUInt8(long translatedRowIndex, long translatedColumnIndex)
         {
             var columnMetadata = Metadata.Columns[translatedColumnIndex];
             var dataOffset = columnMetadata.DataOffset;
@@ -625,6 +491,16 @@ namespace FeatherDotNet
             return View.ReadInt16(valueOffset);
         }
 
+        internal ushort ReadUInt16(long translatedRowIndex, long translatedColumnIndex)
+        {
+            var columnMetadata = Metadata.Columns[translatedColumnIndex];
+            var dataOffset = columnMetadata.DataOffset;
+
+            var valueOffset = dataOffset + translatedRowIndex * sizeof(ushort);
+
+            return View.ReadUInt16(valueOffset);
+        }
+
         internal int ReadInt32(long translatedRowIndex, long translatedColumnIndex)
         {
             var columnMetadata = Metadata.Columns[translatedColumnIndex];
@@ -635,6 +511,16 @@ namespace FeatherDotNet
             return View.ReadInt32(valueOffset);
         }
 
+        internal uint ReadUInt32(long translatedRowIndex, long translatedColumnIndex)
+        {
+            var columnMetadata = Metadata.Columns[translatedColumnIndex];
+            var dataOffset = columnMetadata.DataOffset;
+
+            var valueOffset = dataOffset + translatedRowIndex * sizeof(uint);
+
+            return View.ReadUInt32(valueOffset);
+        }
+
         internal long ReadInt64(long translatedRowIndex, long translatedColumnIndex)
         {
             var columnMetadata = Metadata.Columns[translatedColumnIndex];
@@ -643,6 +529,16 @@ namespace FeatherDotNet
             var valueOffset = dataOffset + translatedRowIndex * sizeof(long);
 
             return View.ReadInt64(valueOffset);
+        }
+
+        internal ulong ReadUInt64(long translatedRowIndex, long translatedColumnIndex)
+        {
+            var columnMetadata = Metadata.Columns[translatedColumnIndex];
+            var dataOffset = columnMetadata.DataOffset;
+
+            var valueOffset = dataOffset + translatedRowIndex * sizeof(ulong);
+
+            return View.ReadUInt64(valueOffset);
         }
 
         const int MIN_BYTE_BUFFER_SIZE = sizeof(long);
@@ -665,6 +561,13 @@ namespace FeatherDotNet
 
             var stringDataStart = dataOffset + (rowCount + 1) * sizeof(int);
 
+            var stringDataPadding = 0;
+            if (stringDataStart % FeatherMagic.ARROW_ALIGNMENT != 0)
+            {
+                stringDataPadding = FeatherMagic.ARROW_ALIGNMENT - (int)(stringDataStart % FeatherMagic.ARROW_ALIGNMENT);
+            }
+            stringDataStart += stringDataPadding;
+
             var stringDataStartIx = stringDataStart + stringOffset;
             var stringDataEndIx = stringDataStart + nextStringOffset;
 
@@ -677,7 +580,7 @@ namespace FeatherDotNet
             }
 
             var stringLength = (int)stringLengthLong;
-
+            
             var buffer = byteBuffer?.Value;
             if (buffer == null || buffer.Length < stringLength)
             {
@@ -739,32 +642,5 @@ namespace FeatherDotNet
 
             return (boolByte & bitMask) != 0;
         }
-    }
-
-    static class UnsafeArrayReader<T>
-    {
-        static readonly Action<MemoryMappedViewAccessor, long, T[], int, int> Delegate;
-
-        static UnsafeArrayReader()
-        {
-            var dyn = new System.Reflection.Emit.DynamicMethod("UnsafeArrayReader_" + typeof(T).Name, null, new[] { typeof(MemoryMappedViewAccessor), typeof(long), typeof(T[]), typeof(int), typeof(int) });
-            var il = dyn.GetILGenerator();
-
-            var readArrayGen = typeof(MemoryMappedViewAccessor).GetMethod("ReadArray");
-            var readArray = readArrayGen.MakeGenericMethod(typeof(T));
-
-            il.Emit(System.Reflection.Emit.OpCodes.Ldarg_0);            // MemoryMappedViewAccessor
-            il.Emit(System.Reflection.Emit.OpCodes.Ldarg_1);            // MemoryMappedViewAccessor long
-            il.Emit(System.Reflection.Emit.OpCodes.Ldarg_2);            // MemoryMappedViewAccessor long T[]
-            il.Emit(System.Reflection.Emit.OpCodes.Ldarg_3);            // MemoryMappedViewAccessor long T[] int
-            il.Emit(System.Reflection.Emit.OpCodes.Ldarg_S, (byte)4);   // MemoryMappedViewAccessor long T[] int int
-            il.Emit(System.Reflection.Emit.OpCodes.Call, readArray);    // int
-            il.Emit(System.Reflection.Emit.OpCodes.Pop);                // --empty--
-            il.Emit(System.Reflection.Emit.OpCodes.Ret);                // --empty--
-
-            Delegate = (Action<MemoryMappedViewAccessor, long, T[], int, int>)dyn.CreateDelegate(typeof(Action<MemoryMappedViewAccessor, long, T[], int, int>));
-        }
-
-        public static void ReadArray(MemoryMappedViewAccessor view, long position, T[] arr, int index, int length) => Delegate(view, position, arr, index, length);
     }
 }

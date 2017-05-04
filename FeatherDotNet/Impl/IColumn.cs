@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FeatherDotNet
+namespace FeatherDotNet.Impl
 {
     interface IColumn<T>:
         IList<T> // implement so Linq's ElementAt is as fast as you'd expect

@@ -1,4 +1,4 @@
-﻿namespace FeatherDotNet
+﻿namespace FeatherDotNet.Impl
 {
     interface IRow
     {
