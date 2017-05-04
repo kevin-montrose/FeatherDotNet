@@ -49,11 +49,6 @@ namespace FeatherDotNet
         LinkedList<ColumnMetadata> Metadata;
 
         /// <summary>
-        /// The file being written to.
-        /// </summary>
-        public string FilePath { get; private set; }
-
-        /// <summary>
         /// WriteMode this FeatherWriter is configured in.
         /// </summary>
         public WriteMode Mode { get; private set; }
