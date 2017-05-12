@@ -1,13 +1,17 @@
 ﻿# Feather.NET
 
-A (work in progress) implementation of the [Feather format](https://github.com/wesm/feather) for .NET.
+An implementation of the [Feather format](https://github.com/wesm/feather) for .NET.
 
-Feather.NET works on memory mapped files, and deserializes lazily.  This means you can operate on very
-large datasets (> `int.MaxValue` rows) without paying a large loading time upfront.
+## Install
+
+[Feather.NET is on Nuget](https://www.nuget.org/packages/FeatherDotNet).  Install through a UI, or use `Install-Package FeatherDotNet`.
 
 ## Loading a Dataframe
 
 Use the `FeatherReader` classes `ReadXXX` and `TryReadXXX` methods.
+
+Feather.NET works on memory mapped files, and deserializes lazily.  This means you can operate on very
+large datasets (> `int.MaxValue` rows) without paying a large loading time upfront.
 
 ## Untyped access
 
