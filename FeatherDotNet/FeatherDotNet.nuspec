@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+		<id>FeatherDotNet</id>
+		<version>0.5.0</version>
+		<authors>Kevin Montrose</authors>
+		<owners>kmontrose</owners>
+		<licenseUrl>https://opensource.org/licenses/Apache-2.0</licenseUrl>
+		<projectUrl>https://github.com/kevin-montrose/FeatherDotNet</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<releaseNotes>Initial release.  Supports reading and writing, but does not support binary data or dictionary encoding.</releaseNotes>
+		<description>.NET implementation of the Feather protocol (see: https://github.com/wesm/feather)</description>
+		<copyright>Copyright © Kevin Montrose 2017</copyright>
+		<tags>serializer binary interop r python</tags>
+
+		<dependencies>
+		</dependencies>
+    </metadata>
+</package>
