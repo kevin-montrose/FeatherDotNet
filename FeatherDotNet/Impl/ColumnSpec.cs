@@ -667,4 +667,19 @@ namespace FeatherDotNet.Impl
             }
         }
     }
+
+    static class DateTimePrecisionTypeExtensionMethods
+    {
+        public static feather.fbs.TimeUnit MapToDiskType(this DateTimePrecisionType type)
+        {
+            switch (type)
+            {
+                case DateTimePrecisionType.Microsecond: return feather.fbs.TimeUnit.MICROSECOND;
+                case DateTimePrecisionType.Millisecond: return feather.fbs.TimeUnit.MILLISECOND;
+                case DateTimePrecisionType.Nanosecond: return feather.fbs.TimeUnit.NANOSECOND;
+                case DateTimePrecisionType.Second: return feather.fbs.TimeUnit.SECOND;
+                default: throw new InvalidOperationException($"Unexpected {nameof(DateTimePrecisionType)}: {type}");
+            }
+        }
+    }
 }

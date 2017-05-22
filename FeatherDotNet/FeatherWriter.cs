@@ -3453,7 +3453,15 @@ namespace FeatherDotNet
             }
         }
 
+        const double SECONDS_PER_TICK = 0.0000001;
+        const double MILLISECONDS_PER_TICK = 0.0001;
         const double MICROSECONDS_PER_TICK = 0.1;
+        const double NANOSECONDS_PER_TICK = 100;
+        static long MapToDiskType(long elapsedTicks)
+        {
+            return (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
+        }
+
         internal void BlitDateTimeArray(DateTime[] col)
         {
             for (var i = 0; i < col.Length; i++)
@@ -3467,9 +3475,8 @@ namespace FeatherDotNet
                 var timeSinceEpoch = dt - FeatherMagic.DATETIME_EPOCH;
                 var elapsedTicks = timeSinceEpoch.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(elapsedTicks);
+                DataStream.Write(value);
             }
 
             DataIndex += col.LongLength * sizeof(long);
@@ -3484,9 +3491,8 @@ namespace FeatherDotNet
                 var timeSinceEpoch = dt - FeatherMagic.DATETIME_EPOCH;
                 var elapsedTicks = timeSinceEpoch.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(elapsedTicks);
+                DataStream.Write(value);
             }
 
             DataIndex += col.LongLength * sizeof(long);
@@ -3505,9 +3511,8 @@ namespace FeatherDotNet
                 var timeSinceEpoch = dtCopy - FeatherMagic.DATETIME_EPOCH;
                 var elapsedTicks = timeSinceEpoch.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(elapsedTicks);
+                DataStream.Write(value);
             }
 
             DataIndex += col.Count * sizeof(long);
@@ -3522,9 +3527,8 @@ namespace FeatherDotNet
                 var timeSinceEpoch = dtCopy - FeatherMagic.DATETIME_EPOCH;
                 var elapsedTicks = timeSinceEpoch.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(elapsedTicks);
+                DataStream.Write(value);
             }
 
             DataIndex += col.Count * sizeof(long);
@@ -3543,9 +3547,8 @@ namespace FeatherDotNet
                 var timeSinceEpoch = dtCopy - FeatherMagic.DATETIME_EPOCH;
                 var elapsedTicks = timeSinceEpoch.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(elapsedTicks);
+                DataStream.Write(value);
                 DataIndex += sizeof(long);
             }
         }
@@ -3559,9 +3562,8 @@ namespace FeatherDotNet
                 var timeSinceEpoch = dtCopy - FeatherMagic.DATETIME_EPOCH;
                 var elapsedTicks = timeSinceEpoch.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(elapsedTicks);
+                DataStream.Write(value);
                 DataIndex += sizeof(long);
             }
         }
@@ -3588,9 +3590,8 @@ namespace FeatherDotNet
                     var timeSinceEpoch = dtValue - FeatherMagic.DATETIME_EPOCH;
                     var elapsedTicks = timeSinceEpoch.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3633,9 +3634,8 @@ namespace FeatherDotNet
                     var timeSinceEpoch = dtValue - FeatherMagic.DATETIME_EPOCH;
                     var elapsedTicks = timeSinceEpoch.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3682,9 +3682,8 @@ namespace FeatherDotNet
                     var timeSinceEpoch = dtValue - FeatherMagic.DATETIME_EPOCH;
                     var elapsedTicks = timeSinceEpoch.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3726,9 +3725,8 @@ namespace FeatherDotNet
                     var timeSinceEpoch = dtValue - FeatherMagic.DATETIME_EPOCH;
                     var elapsedTicks = timeSinceEpoch.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3775,9 +3773,8 @@ namespace FeatherDotNet
                     var timeSinceEpoch = dtValue - FeatherMagic.DATETIME_EPOCH;
                     var elapsedTicks = timeSinceEpoch.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3819,9 +3816,8 @@ namespace FeatherDotNet
                     var timeSinceEpoch = dtValue - FeatherMagic.DATETIME_EPOCH;
                     var elapsedTicks = timeSinceEpoch.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3854,9 +3850,8 @@ namespace FeatherDotNet
                 var ts = col[i];
                 var ticks = ts.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * ticks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(ticks);
+                DataStream.Write(value);
             }
 
             DataIndex += col.LongLength * sizeof(long);
@@ -3868,9 +3863,8 @@ namespace FeatherDotNet
             {
                 var ticks = ts.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * ticks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(ticks);
+                DataStream.Write(value);
             }
 
             DataIndex += col.Count * sizeof(long);
@@ -3882,9 +3876,8 @@ namespace FeatherDotNet
             {
                 var ticks = ts.Ticks;
 
-                var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * ticks);
-
-                DataStream.Write(microseconds);
+                var value = MapToDiskType(ticks);
+                DataStream.Write(value);
                 DataIndex += sizeof(long);
             }
         }
@@ -3903,9 +3896,8 @@ namespace FeatherDotNet
 
                     var elapsedTicks = ts.Value.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3944,9 +3936,8 @@ namespace FeatherDotNet
 
                     var elapsedTicks = ts.Value.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                 }
                 else
                 {
@@ -3985,9 +3976,8 @@ namespace FeatherDotNet
 
                     var elapsedTicks = ts.Value.Ticks;
 
-                    var microseconds = (long)Math.Round(MICROSECONDS_PER_TICK * elapsedTicks);
-
-                    DataStream.Write(microseconds);
+                    var value = MapToDiskType(elapsedTicks);
+                    DataStream.Write(value);
                     DataIndex += sizeof(long);
                 }
                 else

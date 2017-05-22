@@ -66,7 +66,7 @@ namespace FeatherDotNet.Impl
                 var offsetMeta =
                     feather.fbs.TimestampMetadata.CreateTimestampMetadata(
                         builder,
-                        feather.fbs.TimeUnit.MICROSECOND, // note: python impl is unhappy about this unit, but R is ok?
+                        Unit.MapToDiskType(),
                         builder.CreateString("GMT")
                     );
                 metadataOffset = offsetMeta.Value;
@@ -80,7 +80,7 @@ namespace FeatherDotNet.Impl
                 var offsetMeta =
                     feather.fbs.TimeMetadata.CreateTimeMetadata(
                         builder,
-                        feather.fbs.TimeUnit.MICROSECOND
+                        Unit.MapToDiskType()
                     );
                 metadataOffset = offsetMeta.Value;
                 metadata = feather.fbs.TypeMetadata.TimeMetadata;
