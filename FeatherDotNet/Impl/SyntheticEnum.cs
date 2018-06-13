@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -54,7 +54,7 @@ namespace FeatherDotNet.Impl
             Module = Assembly.DefineDynamicModule("DynamicModule");
             SyntheticEnumLookup = new Dictionary<Key, Type>();
         }
-        
+
         public static Type Lookup(IEnumerable<Type> enumTypes)
         {
             var inOrder = enumTypes.OrderBy(t => t.AssemblyQualifiedName).ThenBy(t => t.FullName).ThenBy(t => t.GUID).ToArray();
@@ -87,7 +87,7 @@ namespace FeatherDotNet.Impl
                 builder.DefineLiteral(distinctNames[i], (long)(i + 1));
             }
 
-            return builder.CreateType();
+            return builder.CreateTypeInfo().AsType();
         }
     }
 }
