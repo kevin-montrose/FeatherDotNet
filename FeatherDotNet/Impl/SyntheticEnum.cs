@@ -87,7 +87,7 @@ namespace FeatherDotNet.Impl
                 builder.DefineLiteral(distinctNames[i], (long)(i + 1));
             }
 
-            return builder.CreateType();
+            return builder.CreateTypeInfo().AsType();
         }
     }
 }
