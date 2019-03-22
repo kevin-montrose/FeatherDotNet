@@ -427,6 +427,38 @@ namespace FeatherDotNet
             UnsafeArrayReader<T>.ReadArray(View, byteIndex, array, 0, length);
         }
 
+        private Array ReadNativeArrayUnsafe<T>(long byteIndex, int length) {
+            T[] array = new T[length];
+            UnsafeArrayReader<T>.ReadArray(View, byteIndex, array, 0, length);
+            return array;
+        }
+
+        internal void GetRowRangeWithTypeCast<T>(long translatedRowIndex, long translatedColumnIndex, T[] array, int destinationIndex, int length)
+        {
+            var columnMetadata = Metadata.Columns[translatedColumnIndex];
+            var entrySize = columnMetadata.Type.GetAlignment();
+            var dataStart = columnMetadata.DataOffset;
+            var byteOffset = translatedRowIndex * entrySize;
+
+            var byteIndex = dataStart + byteOffset;
+
+            Array uncastedArray;
+            switch (columnMetadata.Type) {
+                case ColumnType.Int8:   uncastedArray = ReadNativeArrayUnsafe<System.SByte> (byteIndex, length); break;
+                case ColumnType.Int16:  uncastedArray = ReadNativeArrayUnsafe<System.Int16> (byteIndex, length); break;
+                case ColumnType.Int32:  uncastedArray = ReadNativeArrayUnsafe<System.Int32> (byteIndex, length); break;
+                case ColumnType.Int64:  uncastedArray = ReadNativeArrayUnsafe<System.Int64> (byteIndex, length); break;
+                case ColumnType.Uint8:  uncastedArray = ReadNativeArrayUnsafe<System.Byte>  (byteIndex, length); break;
+                case ColumnType.Uint16: uncastedArray = ReadNativeArrayUnsafe<System.UInt16>(byteIndex, length); break;
+                case ColumnType.Uint32: uncastedArray = ReadNativeArrayUnsafe<System.UInt32>(byteIndex, length); break;
+                case ColumnType.Uint64: uncastedArray = ReadNativeArrayUnsafe<System.UInt64>(byteIndex, length); break;
+                case ColumnType.Float:  uncastedArray = ReadNativeArrayUnsafe<System.Single>(byteIndex, length); break;
+                case ColumnType.Double: uncastedArray = ReadNativeArrayUnsafe<System.Double>(byteIndex, length); break;
+                default: throw new InvalidOperationException($"Invalid cast {columnMetadata.Name}: {columnMetadata.Type} -> {typeof(T)}");
+            }
+            Array.Copy(uncastedArray, 0, array, destinationIndex, length);
+        }
+
         internal bool IsNullTranslated(long translatedRowIndex, long translatedColumnIndex)
         {
             var columnMetadata = Metadata.Columns[translatedColumnIndex];
