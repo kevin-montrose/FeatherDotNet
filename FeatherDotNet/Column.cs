@@ -288,7 +288,11 @@ namespace FeatherDotNet
 
             if (CanBeBlitted<T>())
             {
-                Parent.UnsafeFastGetRowRange<T>(translatedIndex, TranslatedColumnIndex, array, destinationIndex, length);
+                if (typeof(T) == Type) {
+                    Parent.UnsafeFastGetRowRange<T>(translatedIndex, TranslatedColumnIndex, array, destinationIndex, length);
+                } else {
+                    Parent.GetRowRangeWithTypeCast<T>(translatedIndex, TranslatedColumnIndex, array, destinationIndex, length);
+                }
                 return;
             }
 
