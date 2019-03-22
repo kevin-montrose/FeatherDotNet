@@ -456,7 +456,7 @@ namespace FeatherDotNet
                 case ColumnType.Double: uncastedArray = ReadNativeArrayUnsafe<System.Double>(byteIndex, length); break;
                 default: throw new InvalidOperationException($"Invalid cast {columnMetadata.Name}: {columnMetadata.Type} -> {typeof(T)}");
             }
-            Array.Copy(uncastedArray, array, length);
+            Array.Copy(uncastedArray, 0, array, destinationIndex, length);
         }
 
         internal bool IsNullTranslated(long translatedRowIndex, long translatedColumnIndex)
