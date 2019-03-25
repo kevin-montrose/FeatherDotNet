@@ -56,7 +56,7 @@ See the [test project](https://github.com/kevin-montrose/FeatherDotNet/FeatherDo
 ## Type Mappings
 
 Integer types can be freely converted provided the underlying type is at least as large as the .NET type (an `Int16` can be mapped to an `int`,
-but and `Int64` may not be mapped to a `int`) and the signedness is the same (a `UInt16` cannot be mapped to an `int`).
+but `Int64` may not be mapped to a `int`) and respects signedness (a `UInt16` can be mapped into `int`, whereas `Int16` can't be mapped into `uint` due to possible loss of sign).
 
 For floating point values, `float` and `double` are supported target types (`decimal` is not).  All integer types can be converted to `float` or `double`.
 If the underlying type is a `Double` it cannot be converted to a `float`, but `Single`s can be converted to `double`s.

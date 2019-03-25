@@ -312,13 +312,15 @@ namespace FeatherDotNet.Impl
                     return toType == typeof(long) || toType == typeof(long?) || toType == typeof(int) || toType == typeof(int?) || toType == typeof(short) || toType == typeof(short?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
 
                 case ColumnType.Uint16:
-                    return toType == typeof(ulong) || toType == typeof(ulong?) || toType == typeof(uint) || toType == typeof(uint?) || toType == typeof(ushort) || toType == typeof(ushort?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
+                    return toType == typeof(ulong) || toType == typeof(ulong?) || toType == typeof(uint) || toType == typeof(uint?) || toType == typeof(ushort) || toType == typeof(ushort?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?) ||
+                           toType == typeof(long)  || toType == typeof(long?)  || toType == typeof(int)  || toType == typeof(int?);
 
                 case ColumnType.Int32:
                     return toType == typeof(long) || toType == typeof(long?) || toType == typeof(int) || toType == typeof(int?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
 
                 case ColumnType.Uint32:
-                    return toType == typeof(ulong) || toType == typeof(ulong?) || toType == typeof(uint) || toType == typeof(uint?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
+                    return toType == typeof(ulong) || toType == typeof(ulong?) || toType == typeof(uint) || toType == typeof(uint?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?) ||
+                           toType == typeof(long) || toType == typeof(long?);
 
                 case ColumnType.Int64:
                     return toType == typeof(long) || toType == typeof(long?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
@@ -330,7 +332,8 @@ namespace FeatherDotNet.Impl
                     return toType == typeof(sbyte) || toType == typeof(sbyte?) || toType == typeof(long) || toType == typeof(long?) || toType == typeof(int) || toType == typeof(int?) || toType == typeof(short) || toType == typeof(short?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
 
                 case ColumnType.Uint8:
-                    return toType == typeof(byte) || toType == typeof(byte?) || toType == typeof(ulong) || toType == typeof(ulong?) || toType == typeof(uint) || toType == typeof(uint?) || toType == typeof(ushort) || toType == typeof(ushort?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
+                    return toType == typeof(byte) || toType == typeof(byte?) || toType == typeof(ulong) || toType == typeof(ulong?) || toType == typeof(uint) || toType == typeof(uint?) || toType == typeof(ushort) || toType == typeof(ushort?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?) ||
+                           toType == typeof(long) || toType == typeof(long?) || toType == typeof(int) || toType == typeof(int?) || toType == typeof(short) || toType == typeof(short?);
 
                 case ColumnType.NullableBool:
                     return toType == typeof(bool?);
@@ -352,13 +355,15 @@ namespace FeatherDotNet.Impl
                     return toType == typeof(long?) || toType == typeof(int?) || toType == typeof(short?) || toType == typeof(float?) || toType == typeof(double?);
 
                 case ColumnType.NullableUint16:
-                    return toType == typeof(ulong?) || toType == typeof(uint?) || toType == typeof(ushort?) || toType == typeof(float?) || toType == typeof(double?);
+                    return toType == typeof(ulong?) || toType == typeof(uint?) || toType == typeof(ushort?) || toType == typeof(float?) || toType == typeof(double?) ||
+                           toType == typeof(long?) || toType == typeof(int?);
 
                 case ColumnType.NullableInt32:
                     return toType == typeof(long?) || toType == typeof(int?) || toType == typeof(float?) || toType == typeof(double?);
 
                 case ColumnType.NullableUint32:
-                    return toType == typeof(ulong?) || toType == typeof(uint?) || toType == typeof(float?) || toType == typeof(double?);
+                    return toType == typeof(ulong?) || toType == typeof(uint?) || toType == typeof(float?) || toType == typeof(double?) ||
+                           toType == typeof(long?);
 
                 case ColumnType.NullableInt64:
                     return toType == typeof(long?) || toType == typeof(float?) || toType == typeof(double?);
@@ -370,7 +375,8 @@ namespace FeatherDotNet.Impl
                     return toType == typeof(sbyte?) || toType == typeof(long?) || toType == typeof(int?) || toType == typeof(short?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
 
                 case ColumnType.NullableUint8:
-                    return toType == typeof(byte?) || toType == typeof(ulong?) || toType == typeof(uint?) || toType == typeof(ushort?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?);
+                    return toType == typeof(byte?) || toType == typeof(ulong?) || toType == typeof(uint?) || toType == typeof(ushort?) || toType == typeof(float) || toType == typeof(float?) || toType == typeof(double) || toType == typeof(double?) ||
+                           toType == typeof(long?) || toType == typeof(int?) || toType == typeof(short?);
 
                 case ColumnType.String:
                 case ColumnType.NullableString:
